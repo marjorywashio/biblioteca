@@ -174,7 +174,7 @@ public class frmLivros extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 255, 204));
 
-        jLabel7.setFont(new java.awt.Font("French Script MT", 0, 40)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Vivaldi", 0, 36)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(51, 46, 29));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Livros");
