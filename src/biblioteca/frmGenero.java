@@ -254,19 +254,6 @@ public class frmGenero extends javax.swing.JFrame {
         this.dispose(); // Fecha o formulário atual
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void atualizarTabelaGenero() {
-        DefaultTableModel model = (DefaultTableModel) tblGenero.getModel();
-        model.setNumRows(0); // Limpa a tabela antes de preencher novamente
-
-        GeneroDAO generoDAO = new GeneroDAO();
-        ArrayList<GeneroDTO> listaGeneros = generoDAO.listarGeneros();
-
-        for (GeneroDTO generoDTO : listaGeneros) {
-            model.addRow(new Object[]{generoDTO.getId_genero(), generoDTO.getNome()});
-        }
-    }
-
-
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         try {
             // Verifica se algum gênero está selecionado na tabela

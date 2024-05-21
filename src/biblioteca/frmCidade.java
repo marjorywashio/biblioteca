@@ -246,20 +246,6 @@ public class frmCidade extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    // Método para atualizar a tabela de cidades
-    private void atualizarTabelaCidade() {
-        DefaultTableModel model = (DefaultTableModel) tblCidade.getModel();
-        model.setNumRows(0); // Limpa a tabela antes de preencher novamente
-
-        CidadeDAO cidadeDAO = new CidadeDAO();
-        ArrayList<CidadeDTO> listaCidades = cidadeDAO.listarCidades();
-
-        for (CidadeDTO cidadeDTO : listaCidades) {
-            model.addRow(new Object[]{cidadeDTO.getId_cidade(), cidadeDTO.getNome()});
-        }
-
-    }
-
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         try {
             // Verifica se alguma cidade está selecionada na tabela

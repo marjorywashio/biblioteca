@@ -336,18 +336,6 @@ public class frmPessoa extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void atualizarTabelaPessoas() {
-        DefaultTableModel model = (DefaultTableModel) TabelaPessoa.getModel();
-        model.setNumRows(0); // Limpa a tabela antes de preencher novamente
-
-        PessoaDAO pessoaDAO = new PessoaDAO();
-        ArrayList<PessoaDTO> listaPessoas = pessoaDAO.ListarPessoas();
-
-        for (PessoaDTO pessoaDTO : listaPessoas) {
-            model.addRow(new Object[]{pessoaDTO.getNome(), pessoaDTO.getTelefone(), pessoaDTO.getId_cidade()});
-        }
-    }
     
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         txtNome.setText(""); // Limpa o valor o JTextField 

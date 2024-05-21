@@ -351,18 +351,6 @@ public class frmLivros extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void atualizarTabelaLivros() {
-        DefaultTableModel model = (DefaultTableModel) tblLivros.getModel();
-        model.setNumRows(0); // Limpa a tabela antes de preencher novamente
-
-        LivrosDAO livroDAO = new LivrosDAO();
-        ArrayList<LivrosDTO> listaLivros = livroDAO.ListarLivros();
-
-        for (LivrosDTO livroDTO : listaLivros) {
-            model.addRow(new Object[]{livroDTO.getTitulo_livro(), livroDTO.getAutor_livro(), livroDTO.getEditora_livro(), livroDTO.getId_genero()});
-        }
-    }
-
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         // TODO add your handling code here:
         try {
@@ -456,7 +444,7 @@ public class frmLivros extends javax.swing.JFrame {
                     txtTitulo.requestFocus();
 
                     // Atualiza a tabela com os novos dados
-                    atualizarTabelaLivros();
+                    btnListarActionPerformed(evt);
 
                     JOptionPane.showMessageDialog(this, "Livro excluído", "Informação", JOptionPane.INFORMATION_MESSAGE);
                 }
