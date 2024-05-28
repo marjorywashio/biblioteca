@@ -73,6 +73,7 @@ public class frmPessoa extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         btnExcluir = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("French Script MT", 0, 40)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 46, 29));
@@ -190,6 +191,16 @@ public class frmPessoa extends javax.swing.JFrame {
             }
         });
 
+        btnLimpar.setBackground(new java.awt.Color(51, 51, 51));
+        btnLimpar.setFont(new java.awt.Font("Poppins Light", 0, 13)); // NOI18N
+        btnLimpar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -197,8 +208,10 @@ public class frmPessoa extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -209,7 +222,6 @@ public class frmPessoa extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cmbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -217,7 +229,8 @@ public class frmPessoa extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtTelefone)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -244,7 +257,8 @@ public class frmPessoa extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnListar))
+                    .addComponent(btnListar)
+                    .addComponent(btnLimpar))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -269,80 +283,85 @@ public class frmPessoa extends javax.swing.JFrame {
                     lista.get(num).getTelefone(),
                     nomeCidade});
             }
+
+            txtNome.setText("");
+            txtTelefone.setText("");
+            cmbCidade.setSelectedItem("Selecionar cidade");
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-    // Obtém os dados da pessoa dos campos de texto
-    String nome = txtNome.getText();
-    String telefone = txtTelefone.getText();
+            // Obtém os dados da pessoa dos campos de texto
+            String nome = txtNome.getText();
+            String telefone = txtTelefone.getText();
 
-    // Obtém o nome da cidade selecionada no combo box
-    String nomeCidade = cmbCidade.getSelectedItem().toString();
+            // Obtém o nome da cidade selecionada no combo box
+            String nomeCidade = cmbCidade.getSelectedItem().toString();
 
-    // Obtém o ID da cidade selecionada no combo box
-    CidadeDAO cidadeDAO = new CidadeDAO();
-    int idCidade = cidadeDAO.obterIdCidadePorNome(nomeCidade);
+            // Obtém o ID da cidade selecionada no combo box
+            CidadeDAO cidadeDAO = new CidadeDAO();
+            int idCidade = cidadeDAO.obterIdCidadePorNome(nomeCidade);
 
-    // Verifica se uma pessoa está selecionada na tabela
-    int selectedRow = TabelaPessoa.getSelectedRow();
-    if (selectedRow != -1) {
-        // Se uma pessoa estiver selecionada, atualiza a pessoa existente
+            // Verifica se uma pessoa está selecionada na tabela
+            int selectedRow = TabelaPessoa.getSelectedRow();
+            if (selectedRow != -1) {
+                // Se uma pessoa estiver selecionada, atualiza a pessoa existente
 
-        // Obtém o ID da pessoa selecionada na tabela
-        DefaultTableModel model = (DefaultTableModel) TabelaPessoa.getModel();
-        var nomePessoa = model.getValueAt(selectedRow, 0);
-        PessoaDAO pessoaDAO = new PessoaDAO();
-        int idPessoa = pessoaDAO.obterIdPessoaPorNome(nomePessoa.toString());
+                // Obtém o ID da pessoa selecionada na tabela
+                DefaultTableModel model = (DefaultTableModel) TabelaPessoa.getModel();
+                var nomePessoa = model.getValueAt(selectedRow, 0);
+                PessoaDAO pessoaDAO = new PessoaDAO();
+                int idPessoa = pessoaDAO.obterIdPessoaPorNome(nomePessoa.toString());
 
-        // Cria um objeto PessoaDTO com o ID da pessoa e os novos dados
-        PessoaDTO pessoaDTO = new PessoaDTO();
-        pessoaDTO.setId_pessoa(idPessoa);
-        pessoaDTO.setNome(nome);
-        pessoaDTO.setTelefone(telefone);
-        pessoaDTO.setId_cidade(idCidade);
+                // Cria um objeto PessoaDTO com o ID da pessoa e os novos dados
+                PessoaDTO pessoaDTO = new PessoaDTO();
+                pessoaDTO.setId_pessoa(idPessoa);
+                pessoaDTO.setNome(nome);
+                pessoaDTO.setTelefone(telefone);
+                pessoaDTO.setId_cidade(idCidade);
 
-        // Instancia o objeto PessoaDAO para realizar a atualização no banco de dados
-        pessoaDAO.atualizarPessoa(pessoaDTO);
+                // Instancia o objeto PessoaDAO para realizar a atualização no banco de dados
+                pessoaDAO.atualizarPessoa(pessoaDTO);
 
-        // Atualiza a tabela com os novos dados
-        btnListarActionPerformed(evt);
+                // Atualiza a tabela com os novos dados
+                btnListarActionPerformed(evt);
 
-        JOptionPane.showMessageDialog(this, "Pessoa atualizada", "Informação", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        // Se nenhuma pessoa estiver selecionada, cadastra uma nova pessoa
+                // Limpa os campos de texto e o ComboBox
+                btnLimparActionPerformed(evt);
 
-        // Cria um objeto PessoaDTO com os dados da nova pessoa
-        PessoaDTO pessoaDTO = new PessoaDTO();
-        pessoaDTO.setNome(nome);
-        pessoaDTO.setTelefone(telefone);
-        pessoaDTO.setId_cidade(idCidade);
+                JOptionPane.showMessageDialog(this, "Pessoa atualizada", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Se nenhuma pessoa estiver selecionada, cadastra uma nova pessoa
 
-        // Instancia o objeto PessoaDAO para cadastrar a nova pessoa no banco de dados
-        PessoaDAO pessoaDAO = new PessoaDAO();
-        pessoaDAO.cadastrarPessoa(pessoaDTO);
+                // Cria um objeto PessoaDTO com os dados da nova pessoa
+                PessoaDTO pessoaDTO = new PessoaDTO();
+                pessoaDTO.setNome(nome);
+                pessoaDTO.setTelefone(telefone);
+                pessoaDTO.setId_cidade(idCidade);
 
-        // Atualiza a tabela com os novos dados
-        btnListarActionPerformed(evt);
+                // Instancia o objeto PessoaDAO para cadastrar a nova pessoa no banco de dados
+                PessoaDAO pessoaDAO = new PessoaDAO();
+                pessoaDAO.cadastrarPessoa(pessoaDTO);
 
-        JOptionPane.showMessageDialog(this, "Pessoa salva", "Informação", JOptionPane.INFORMATION_MESSAGE);
-    }
-} catch (Exception e) {
-    // Trate quaisquer exceções aqui
-    e.printStackTrace();
-}
+                // Atualiza a tabela com os novos dados
+                btnListarActionPerformed(evt);
+
+                // Limpa os campos de texto e o ComboBox
+                btnLimparActionPerformed(evt);
+
+                JOptionPane.showMessageDialog(this, "Pessoa salva", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception e) {
+            // Trate quaisquer exceções aqui
+            e.printStackTrace();
+        }
 
 
     }//GEN-LAST:event_btnSalvarActionPerformed
-    
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        txtNome.setText(""); // Limpa o valor o JTextField 
-        txtTelefone.setText("");
-        cmbCidade.setSelectedItem("Selecionar cidade");
-        txtNome.requestFocus();
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         frmBiblioteca bibliotecaForm = new frmBiblioteca();
         bibliotecaForm.setVisible(true);
         this.dispose(); // Fecha o formulário atual
@@ -393,14 +412,11 @@ public class frmPessoa extends javax.swing.JFrame {
                     PessoaDAO pessoaDAO = new PessoaDAO();
                     pessoaDAO.ExcluirPessoa(pessoaDTO);
 
-                    // Limpa os campos de texto e o ComboBox
-                    txtNome.setText("");
-                    txtTelefone.setText("");
-                    cmbCidade.setSelectedItem("Selecionar pessoa");
-                    txtNome.requestFocus();
-
                     // Atualiza a tabela com os novos dados
                     btnListarActionPerformed(evt);
+
+                    // Limpa os campos de texto e o ComboBox
+                    btnLimparActionPerformed(evt);
 
                     JOptionPane.showMessageDialog(this, "Pessoa excluída", "Informação", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -419,15 +435,23 @@ public class frmPessoa extends javax.swing.JFrame {
         if (selectedRow != -1) {
             DefaultTableModel model = (DefaultTableModel) TabelaPessoa.getModel();
 
-            // Preenche os campos de texto com os dados do livro selecionado
-            txtNome.setText((String) model.getValueAt(selectedRow, 0)); // Coluna do título
-            txtTelefone.setText((String) model.getValueAt(selectedRow, 1)); // Coluna do autor
+            // Preenche os campos de texto com os dados da pessoa selecionada
+            txtNome.setText((String) model.getValueAt(selectedRow, 0)); // Coluna do nome
+            txtTelefone.setText((String) model.getValueAt(selectedRow, 1)); // Coluna do telefone
 
-            // Preenche a combobox com o gênero do livro selecionado
-            String cidade = (String) model.getValueAt(selectedRow, 2); // Coluna do gênero
+            // Preenche a combobox com a cidade da pessoa selecionada
+            String cidade = (String) model.getValueAt(selectedRow, 2); // Coluna da cidade
             cmbCidade.setSelectedItem(cidade);
         }
     }//GEN-LAST:event_TabelaPessoaMouseClicked
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // Limpa os campos de texto e o ComboBox
+        txtNome.setText("");
+        txtTelefone.setText("");
+        cmbCidade.setSelectedItem("Selecionar pessoa");
+        txtNome.requestFocus();
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -468,6 +492,7 @@ public class frmPessoa extends javax.swing.JFrame {
     private javax.swing.JTable TabelaPessoa;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cmbCidade;

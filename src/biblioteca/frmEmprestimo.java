@@ -15,6 +15,7 @@ public class frmEmprestimo extends javax.swing.JFrame {
 
     private PessoaDAO pessoaDAO;
     private LivrosDAO livrosDAO;
+    private String ultimaSelecao = "";
 
     public frmEmprestimo() {
         initComponents();
@@ -25,6 +26,18 @@ public class frmEmprestimo extends javax.swing.JFrame {
         preencherComboLivros();
         preencherComboDevolucao();
         btnListarActionPerformed(null);
+
+        cmbPessoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPessoaActionPerformed(evt);
+            }
+        });
+
+        cmbLivro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbLivroActionPerformed(evt);
+            }
+        });
     }
 
     private void preencherComboPessoa() {
@@ -117,6 +130,8 @@ public class frmEmprestimo extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         btnExcluir = new javax.swing.JButton();
+        btnFiltrar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
@@ -229,9 +244,19 @@ public class frmEmprestimo extends javax.swing.JFrame {
 
         cmbPessoa.setFont(new java.awt.Font("Poppins Light", 0, 13)); // NOI18N
         cmbPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPessoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPessoaActionPerformed(evt);
+            }
+        });
 
         cmbLivro.setFont(new java.awt.Font("Poppins Light", 0, 13)); // NOI18N
         cmbLivro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbLivro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbLivroActionPerformed(evt);
+            }
+        });
 
         cmbDevolucao.setFont(new java.awt.Font("Poppins Light", 0, 13)); // NOI18N
         cmbDevolucao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -270,6 +295,26 @@ public class frmEmprestimo extends javax.swing.JFrame {
             }
         });
 
+        btnFiltrar.setBackground(new java.awt.Color(51, 51, 51));
+        btnFiltrar.setFont(new java.awt.Font("Poppins Light", 0, 13)); // NOI18N
+        btnFiltrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setBackground(new java.awt.Color(51, 51, 51));
+        btnLimpar.setFont(new java.awt.Font("Poppins Light", 0, 13)); // NOI18N
+        btnLimpar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -294,23 +339,27 @@ public class frmEmprestimo extends javax.swing.JFrame {
                                     .addGap(8, 8, 8))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                    .addGap(8, 8, 8)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(cmbLivro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cmbPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
                             .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(290, 290, 290)
+                                .addGap(182, 182, 182)
+                                .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,13 +382,15 @@ public class frmEmprestimo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExcluir)
-                    .addComponent(btnSalvar))
+                    .addComponent(btnSalvar)
+                    .addComponent(btnFiltrar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
-                    .addComponent(btnListar))
+                    .addComponent(btnListar)
+                    .addComponent(btnLimpar))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -371,6 +422,8 @@ public class frmEmprestimo extends javax.swing.JFrame {
                     devolucao
                 });
             }
+
+            btnLimparActionPerformed(evt);
         } catch (Exception e) {
             // Trate quaisquer exceções aqui
             e.printStackTrace();
@@ -420,10 +473,7 @@ public class frmEmprestimo extends javax.swing.JFrame {
 
                 btnListarActionPerformed(evt);
 
-                cmbPessoa.setSelectedItem("Selecionar pessoa");
-                cmbLivro.setSelectedItem("Selecionar livro");
-                cmbDevolucao.setSelectedItem("Selecione");
-                txtData.setText("");
+                btnLimparActionPerformed(evt);
 
                 JOptionPane.showMessageDialog(this, "Empréstimo atualizado", "Informação", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -447,10 +497,7 @@ public class frmEmprestimo extends javax.swing.JFrame {
 
                 btnListarActionPerformed(evt);
 
-                cmbPessoa.setSelectedItem("Selecionar pessoa");
-                cmbLivro.setSelectedItem("Selecionar livro");
-                cmbDevolucao.setSelectedItem("Selecione");
-                txtData.setText("");
+                btnLimparActionPerformed(evt);
 
                 JOptionPane.showMessageDialog(this, "Empréstimo salvo", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -462,11 +509,6 @@ public class frmEmprestimo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        cmbPessoa.setSelectedItem("Selecionar pessoa");
-        cmbLivro.setSelectedItem("Selecionar livro");
-        cmbDevolucao.setSelectedItem("Selecione");
-        txtData.setText("");
-
         frmBiblioteca bibliotecaForm = new frmBiblioteca();
         bibliotecaForm.setVisible(true);
         this.dispose(); // Fecha o formulário atual
@@ -514,10 +556,7 @@ public class frmEmprestimo extends javax.swing.JFrame {
 
                     btnListarActionPerformed(evt);
 
-                    cmbPessoa.setSelectedItem("Selecionar pessoa");
-                    cmbLivro.setSelectedItem("Selecionar livro");
-                    cmbDevolucao.setSelectedItem("Selecione");
-                    txtData.setText("");
+                    btnLimparActionPerformed(evt);
 
                     JOptionPane.showMessageDialog(this, "Empréstimo excluído", "Informação", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -587,6 +626,77 @@ public class frmEmprestimo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_TabelaEmprestimoMouseClicked
 
+
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        try {
+            EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
+            PessoaDAO pessoaDAO = new PessoaDAO();
+            LivrosDAO livroDAO = new LivrosDAO();
+
+            DefaultTableModel model = (DefaultTableModel) TabelaEmprestimo.getModel();
+            model.setNumRows(0);
+
+            if (ultimaSelecao.equals("pessoa")) {
+                String nome_pessoa = cmbPessoa.getSelectedItem().toString();
+                int id_pessoa = pessoaDAO.obterIdPessoaPorNome(nome_pessoa);
+                ArrayList<EmprestimoDTO> lista = emprestimoDAO.filtrarEmprestimoPorPessoa(id_pessoa);
+
+                for (EmprestimoDTO emprestimo : lista) {
+                    String nomePessoa = pessoaDAO.obterNomePessoaPorId(emprestimo.getId_pessoa());
+                    String nomeLivro = livroDAO.obterNomeLivroPorId(emprestimo.getId_livro());
+                    String devolucao = emprestimo.getDevolucao() == 1 ? "Sim" : "Não";
+                    String dataFormatada = new SimpleDateFormat("dd/MM/yyyy").format(emprestimo.getData_emprestimo());
+
+                    model.addRow(new Object[]{
+                        nomePessoa,
+                        nomeLivro,
+                        dataFormatada,
+                        devolucao
+                    });
+                }
+            } else if (ultimaSelecao.equals("livro")) {
+                String nome_livro = cmbLivro.getSelectedItem().toString();
+                int id_livro = livroDAO.obterIdLivroPorNome(nome_livro);
+                ArrayList<EmprestimoDTO> lista = emprestimoDAO.filtrarEmprestimoPorLivro(id_livro);
+
+                for (EmprestimoDTO emprestimo : lista) {
+                    String nomePessoa = pessoaDAO.obterNomePessoaPorId(emprestimo.getId_pessoa());
+                    String nomeLivro = livroDAO.obterNomeLivroPorId(emprestimo.getId_livro());
+                    String devolucao = emprestimo.getDevolucao() == 1 ? "Sim" : "Não";
+                    String dataFormatada = new SimpleDateFormat("dd/MM/yyyy").format(emprestimo.getData_emprestimo());
+
+                    model.addRow(new Object[]{
+                        nomePessoa,
+                        nomeLivro,
+                        dataFormatada,
+                        devolucao
+                    });
+                }
+            }
+
+            btnLimparActionPerformed(evt);
+        } catch (Exception e) {
+            System.out.println(e + "Erro");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnFiltrarActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        cmbPessoa.setSelectedItem("Selecionar pessoa");
+        cmbLivro.setSelectedItem("Selecionar livro");
+        cmbDevolucao.setSelectedItem("Selecione");
+        txtData.setText("");
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+
+    private void cmbPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPessoaActionPerformed
+        ultimaSelecao = "pessoa";
+    }//GEN-LAST:event_cmbPessoaActionPerformed
+
+    private void cmbLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbLivroActionPerformed
+        ultimaSelecao = "livro";
+    }//GEN-LAST:event_cmbLivroActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -634,6 +744,8 @@ public class frmEmprestimo extends javax.swing.JFrame {
     private javax.swing.JTable TabelaEmprestimo;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnFiltrar;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cmbDevolucao;

@@ -18,8 +18,6 @@ public class EmprestimoDAO {
     public void cadastrarEmprestimo(EmprestimoDTO objEmprestimoDTO) {
         String sql = "insert into emprestimo (id_emprestimo, id_pessoa, id_livro, data_emprestimo, devolucao) values (null,?,?,?,?)";
 
-        //conn = (Connection) new Conexao(); 
-        // connection = Conexao.getConexao(); 
         conn = Conexao.getConexao();
 
         try {
@@ -38,8 +36,6 @@ public class EmprestimoDAO {
     public void atualizarEmprestimo(EmprestimoDTO objEmprestimoDTO) {
         String sql = "UPDATE emprestimo SET id_pessoa = ?, id_livro = ?, data_emprestimo = ?, devolucao = ? WHERE id_emprestimo = ?";
 
-        //conn = (Connection) new Conexao(); 
-        // connection = Conexao.getConexao(); 
         conn = Conexao.getConexao();
 
         try {
@@ -59,8 +55,6 @@ public class EmprestimoDAO {
     public void ExcluirEmprestimo(int idEmprestimo){
         String sql = "DELETE FROM emprestimo WHERE id_emprestimo = ?";
 
-        //conn = (Connection) new Conexao(); 
-        // connection = Conexao.getConexao(); 
         conn = Conexao.getConexao();
 
         try {
@@ -189,5 +183,59 @@ public class EmprestimoDAO {
 
         return idEmprestimo;
     }
+    
+    public ArrayList<EmprestimoDTO> filtrarEmprestimoPorPessoa(int id_pessoa) {
+        String sql = "SELECT * FROM emprestimo WHERE id_pessoa=?";
+        conn = Conexao.getConexao();
+        
+        PreparedStatement stmt = null;
 
+        try {
+            //pstm = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id_pessoa);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                EmprestimoDTO objEmprestimoDTO = new EmprestimoDTO();
+                objEmprestimoDTO.setId_pessoa(rs.getInt("id_pessoa"));
+                objEmprestimoDTO.setId_livro(rs.getInt("id_livro"));
+                objEmprestimoDTO.setData_emprestimo(rs.getDate("data_emprestimo"));
+                objEmprestimoDTO.setDevolucao(rs.getInt("devolucao"));
+                lista.add(objEmprestimoDTO);
+                
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return lista;
+    }
+
+    public ArrayList<EmprestimoDTO> filtrarEmprestimoPorLivro(int id_livro) {
+        String sql = "SELECT * FROM emprestimo WHERE id_livro=?";
+        conn = Conexao.getConexao();
+        
+        PreparedStatement stmt = null;
+
+        try {
+            //pstm = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id_livro);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                EmprestimoDTO objEmprestimoDTO = new EmprestimoDTO();
+                objEmprestimoDTO.setId_pessoa(rs.getInt("id_pessoa"));
+                objEmprestimoDTO.setId_livro(rs.getInt("id_livro"));
+                objEmprestimoDTO.setData_emprestimo(rs.getDate("data_emprestimo"));
+                objEmprestimoDTO.setDevolucao(rs.getInt("devolucao"));
+                lista.add(objEmprestimoDTO);
+                
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return lista;
+    }
+    
 }

@@ -8,6 +8,7 @@ import java.awt.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -25,6 +26,7 @@ public class frmCidade extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         cidadeDAO = new CidadeDAO();
         btnListarActionPerformed(null);
+        ajustarLarguraColunas();
     }
 
     /**
@@ -46,8 +48,10 @@ public class frmCidade extends javax.swing.JFrame {
         btnListar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCidade = new javax.swing.JTable();
+        btnLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(395, 391));
 
         jLabel3.setFont(new java.awt.Font("Poppins Light", 0, 13)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 46, 29));
@@ -88,10 +92,10 @@ public class frmCidade extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(112, 112, 112)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(98, 98, 98))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +133,7 @@ public class frmCidade extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Código da cidade", "Cidade"
+                "Código", "Cidade"
             }
         ));
         tblCidade.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -139,6 +143,16 @@ public class frmCidade extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblCidade);
 
+        btnLimpar.setBackground(new java.awt.Color(51, 51, 51));
+        btnLimpar.setFont(new java.awt.Font("Poppins Light", 0, 13)); // NOI18N
+        btnLimpar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,7 +160,7 @@ public class frmCidade extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,12 +169,15 @@ public class frmCidade extends javax.swing.JFrame {
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,26 +192,33 @@ public class frmCidade extends javax.swing.JFrame {
                     .addComponent(btnExcluir)
                     .addComponent(btnSalvar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
-                    .addComponent(btnListar))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(btnListar)
+                    .addComponent(btnLimpar))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        txtCidade.setText(""); // Limpa o valor o JTextField
-        txtCidade.requestFocus();
-
         frmBiblioteca bibliotecaForm = new frmBiblioteca();
         bibliotecaForm.setVisible(true);
         this.dispose(); // Fecha o formulário atual
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void ajustarLarguraColunas() {
+        tblCidade.setAutoResizeMode(tblCidade.AUTO_RESIZE_OFF); // Desativar o redimensionamento automático
+        TableColumnModel columnModel = tblCidade.getColumnModel();
+
+        columnModel.getColumn(0).setPreferredWidth(50); // Código
+        columnModel.getColumn(1).setPreferredWidth(294); // Nome da cidade
+    }
+
+    
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
             // Obtém o nome da cidade do campo de texto
@@ -220,7 +244,9 @@ public class frmCidade extends javax.swing.JFrame {
 
                 // Atualiza a tabela com os novos dados
                 btnListarActionPerformed(evt);
-                txtCidade.setText("");
+
+                // Limpa o campo de texto
+                btnLimparActionPerformed(evt);
 
                 JOptionPane.showMessageDialog(this, "Cidade atualizada", "Informação", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -236,7 +262,9 @@ public class frmCidade extends javax.swing.JFrame {
 
                 // Atualiza a tabela com os novos dados
                 btnListarActionPerformed(evt);
-                txtCidade.setText("");
+
+                // Limpa o campo de texto
+                btnLimparActionPerformed(evt);
 
                 JOptionPane.showMessageDialog(this, "Cidade salva", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -269,7 +297,9 @@ public class frmCidade extends javax.swing.JFrame {
 
                         // Atualiza a tabela após a exclusão
                         btnListarActionPerformed(evt);
-                        txtCidade.setText("");
+
+                        // Limpa o campo de texto
+                        btnLimparActionPerformed(evt);
 
                         JOptionPane.showMessageDialog(this, "Cidade excluída", "Informação", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -314,6 +344,11 @@ public class frmCidade extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblCidadeMouseClicked
 
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        txtCidade.setText("");
+        txtCidade.requestFocus();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -352,6 +387,7 @@ public class frmCidade extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;

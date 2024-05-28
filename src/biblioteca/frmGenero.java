@@ -7,6 +7,7 @@ package biblioteca;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -24,6 +25,7 @@ public class frmGenero extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         generoDAO = new GeneroDAO();
         btnListarActionPerformed(null);
+        ajustarLarguraColunas();
     }
 
     /**
@@ -46,6 +48,7 @@ public class frmGenero extends javax.swing.JFrame {
         btnListar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblGenero = new javax.swing.JTable();
+        btnLimpar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("French Script MT", 0, 40)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 46, 29));
@@ -119,7 +122,7 @@ public class frmGenero extends javax.swing.JFrame {
         btnListar.setBackground(new java.awt.Color(51, 51, 51));
         btnListar.setFont(new java.awt.Font("Poppins Light", 0, 13)); // NOI18N
         btnListar.setForeground(new java.awt.Color(255, 255, 255));
-        btnListar.setText("Atualizar");
+        btnListar.setText("Listar");
         btnListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnListarActionPerformed(evt);
@@ -145,30 +148,43 @@ public class frmGenero extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblGenero);
 
+        btnLimpar.setBackground(new java.awt.Color(51, 51, 51));
+        btnLimpar.setFont(new java.awt.Font("Poppins Light", 0, 13)); // NOI18N
+        btnLimpar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(105, 105, 105)
-                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtGenero)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(105, 105, 105)
+                                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtGenero)))))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,16 +199,25 @@ public class frmGenero extends javax.swing.JFrame {
                     .addComponent(btnSalvar)
                     .addComponent(btnExcluir))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
-                    .addComponent(btnListar))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(btnListar)
+                    .addComponent(btnLimpar))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ajustarLarguraColunas() {
+        tblGenero.setAutoResizeMode(tblGenero.AUTO_RESIZE_OFF); // Desativar o redimensionamento automático
+        TableColumnModel columnModel = tblGenero.getColumnModel();
+
+        columnModel.getColumn(0).setPreferredWidth(50); // Código
+        columnModel.getColumn(1).setPreferredWidth(285); // Nome do gênero
+    }
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
@@ -219,7 +244,9 @@ public class frmGenero extends javax.swing.JFrame {
 
                 // Atualiza a tabela com os novos dados
                 btnListarActionPerformed(evt);
-                txtGenero.setText("");
+
+                // Limpa o campo de texto
+                btnLimparActionPerformed(evt);
 
                 JOptionPane.showMessageDialog(this, "Gênero atualizado", "Informação", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -235,7 +262,9 @@ public class frmGenero extends javax.swing.JFrame {
 
                 // Atualiza a tabela com os novos dados
                 btnListarActionPerformed(evt);
-                txtGenero.setText("");
+
+                // Limpa o campo de texto
+                btnLimparActionPerformed(evt);
 
                 JOptionPane.showMessageDialog(this, "Gênero salvo", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -246,9 +275,6 @@ public class frmGenero extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        txtGenero.setText(""); // Limpa o valor o JTextField 
-        txtGenero.requestFocus();
-
         frmBiblioteca bibliotecaForm = new frmBiblioteca();
         bibliotecaForm.setVisible(true);
         this.dispose(); // Fecha o formulário atual
@@ -277,7 +303,9 @@ public class frmGenero extends javax.swing.JFrame {
 
                         // Atualiza a tabela após a exclusão
                         btnListarActionPerformed(evt);
-                        txtGenero.setText("");
+
+                        // Limpa o campo de texto
+                        btnLimparActionPerformed(evt);
 
                         JOptionPane.showMessageDialog(this, "Gênero excluído", "Informação", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -324,6 +352,11 @@ public class frmGenero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblGeneroMouseClicked
 
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        txtGenero.setText("");
+        txtGenero.requestFocus();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -362,6 +395,7 @@ public class frmGenero extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
